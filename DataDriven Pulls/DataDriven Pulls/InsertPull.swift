@@ -10,6 +10,7 @@ import SwiftUI
 struct InsertPull: View {
     //Pull Details
     @State private var puller: String = ""
+    @State private var tractor: String = ""
     @State private var distance: String = ""
     @State private var sled: String = ""
     @State private var tclass: String = ""
@@ -27,6 +28,7 @@ struct InsertPull: View {
                 Form{
                     Section(header: Text("Pull Details")){
                         TextField("Puller (e.g., Rick)", text: $puller)
+                        TextField("Tractor (e.g., WhyNot)", text: $tractor)
                         TextField("Class (e.g., 9500 Pro Farm)", text: $tclass)
                         TextField("Distance (e.g., 300 ft)", text: $distance).keyboardType(.decimalPad)
                         TextField("Sled (e.g., Red Rock)", text: $sled)
@@ -40,7 +42,7 @@ struct InsertPull: View {
                         TextField("Belly Weight (e.g., 300 lbs", text: $bellyWeight)
                         TextField("Back Weight (e.g., 300 lbs)", text: $backWeight)
                     }
-                }.navigationTitle("Insert Pull")
+                }.navigationTitle("Record Pull")
                 
             }
         }
