@@ -11,6 +11,7 @@
 		82CDEE402D18B23500B060CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CDEE3F2D18B23500B060CB /* ContentView.swift */; };
 		82CDEE422D18B23500B060CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82CDEE412D18B23500B060CB /* Assets.xcassets */; };
 		82CDEE452D18B23500B060CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82CDEE442D18B23500B060CB /* Preview Assets.xcassets */; };
+		82CDEE4C2D18B52300B060CB /* InsertPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CDEE4B2D18B52200B060CB /* InsertPull.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		82CDEE3F2D18B23500B060CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		82CDEE412D18B23500B060CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		82CDEE442D18B23500B060CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		82CDEE4B2D18B52200B060CB /* InsertPull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertPull.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				82CDEE3D2D18B23500B060CB /* DataDriven_PullsApp.swift */,
 				82CDEE3F2D18B23500B060CB /* ContentView.swift */,
+				82CDEE4B2D18B52200B060CB /* InsertPull.swift */,
 				82CDEE412D18B23500B060CB /* Assets.xcassets */,
 				82CDEE432D18B23500B060CB /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82CDEE4C2D18B52300B060CB /* InsertPull.swift in Sources */,
 				82CDEE402D18B23500B060CB /* ContentView.swift in Sources */,
 				82CDEE3E2D18B23500B060CB /* DataDriven_PullsApp.swift in Sources */,
 			);
