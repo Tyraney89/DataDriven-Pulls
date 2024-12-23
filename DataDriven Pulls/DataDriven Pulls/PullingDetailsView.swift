@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct PullingDetailsView: View {
+    var viewModel: Pulls
+    
     var body: some View {
         NavigationView{
             VStack{
                 HStack{
                     VStack(alignment: .leading){
-                        Text("Date: 11-11-02")
-                        Text("Location: New Market")
+                        Text(GlobalDateFormatter.shared.string(from: viewModel.pullDate))
+                        Text(viewModel.pullLocation)
                     }
                     Spacer()
                 }.padding()
@@ -27,14 +29,11 @@ struct PullingDetailsView: View {
                         .navigationTitle("Hooks")
                     }
                 }
-            }.navigationTitle("Pull Name")
+            }.navigationTitle(viewModel.pullName)
         }
     }
 }
 
-#Preview {
-    PullingDetailsView()
-}
 
 struct Hooks: View {
     var Puller: String
