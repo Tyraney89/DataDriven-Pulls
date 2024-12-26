@@ -10,7 +10,7 @@ import SwiftData
 
 struct HomeView: View {
     
-    @Query
+    @Query (sort: \Pulls.pullDate)
     var pulls: [Pulls]
     
     @State private var selectedTab = 0
