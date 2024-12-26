@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
-    
+    @Environment (\.modelContext) var modelContext
     @Query (sort: \Pulls.pullDate)
     var pulls: [Pulls]
     
@@ -18,14 +18,19 @@ struct HomeView: View {
     var body: some View {
         TabView{
             NavigationView{
-                ScrollView{
-                    LazyVStack{
-                        ForEach(pulls) { pull in
-                            PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate).onTapGesture {
+                List{
+                    ForEach(pulls) { pull in
+                        PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    deletePull(pull)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
                             }
-                        }
+                            .navigationTitle("Recent Pulls")
                     }
-                    .navigationTitle("Recent Pulls")
+                    
                 }
                 
             }.tabItem {
@@ -40,6 +45,15 @@ struct HomeView: View {
             .tag(1)
         }.accentColor(Color("PullingColor"))
     }
+    
+    func deletePull(_ pull: Pulls) {
+        modelContext.delete(pull)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Error saving context after deletion: \(error.localizedDescription)")
+        }
+    }
 }
 
 
@@ -52,28 +66,28 @@ struct PullRow: View {
     var Name: String
     var Location: String
     var Date: Date
-
+    
     var body: some View{
-            VStack{
-                HStack{
-                    VStack(alignment: .leading)
-                    {
-                        Text(Name).font(.title2)
-                        Spacer()
-                        Text(Location)
-                    }
+        VStack{
+            HStack{
+                VStack(alignment: .leading)
+                {
+                    Text(Name).font(.title2)
                     Spacer()
-                    VStack{
-                        Text(GlobalDateFormatter.shared.string(from: Date)).font(.subheadline).foregroundColor(Color("PullingColor"))
-                    }
+                    Text(Location)
                 }
-                .padding() // Padding inside the bubble
-                .background(Color("PullingColor").opacity(0.1)) // Background color for the bubble
-                .cornerRadius(15) // Rounded corners for the bubble
-                .shadow(radius: 5) // Shadow to give it a lifted effect
-                .padding(.horizontal) // Padding on the sides of the bubble
+                Spacer()
+                VStack{
+                    Text(GlobalDateFormatter.shared.string(from: Date)).font(.subheadline).foregroundColor(Color("PullingColor"))
+                }
             }
-            .padding(.vertical, 8)
-            .listRowInsets(EdgeInsets())
+            .padding() // Padding inside the bubble
+            .background(Color("PullingColor").opacity(0.1)) // Background color for the bubble
+            .cornerRadius(15) // Rounded corners for the bubble
+            .shadow(radius: 5) // Shadow to give it a lifted effect
+            .padding(.horizontal) // Padding on the sides of the bubble
+        }
+        .padding(.vertical, 8)
+        .listRowInsets(EdgeInsets())
     }
 }
