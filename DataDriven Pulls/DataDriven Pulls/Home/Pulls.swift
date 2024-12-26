@@ -6,22 +6,20 @@
 //
 
 import Foundation
+import SwiftData
 
-struct Pulls: Hashable, Identifiable {
-    
-    let id = UUID()
-    let pullName: String
-    let pullLocation: String
-    let pullDate: Date
-}
 
-struct MockData{
-    static var pulls = [
-        Pulls(pullName: "Cow Town", pullLocation: "Kansas City MO", pullDate: Date()),
-    ]
+@Model
+class Pulls {
+    @Attribute(.unique) var id = UUID()
+    var pullName: String
+    var pullLocation: String
+    var pullDate: Date
     
-    static func addPull(pullName: String, pullLocation: String, pullDate: Date) {
-            let newPull = Pulls(pullName: pullName, pullLocation: pullLocation, pullDate: pullDate)
-            pulls.append(newPull)
+    init(pullName: String, pullLocation: String, pullDate: Date) {
+            self.id = UUID()
+            self.pullName = pullName
+            self.pullLocation = pullLocation
+            self.pullDate = pullDate
         }
 }

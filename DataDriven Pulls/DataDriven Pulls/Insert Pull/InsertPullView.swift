@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct InsertPullView: View {
+    
+    @Environment(\.modelContext) private var modelContext
+    
+    
     //Pull details
     @State private var pullName: String = ""
     @State private var pullDate = Date()
     @State private var pullLocation: String = ""
+    
+    @Binding var selectedTab: Int
     
     var body: some View {
         NavigationView{
@@ -38,16 +45,20 @@ struct InsertPullView: View {
         }
     }
     func savePull() {
-            // Add the new pull to the MockData
-            MockData.addPull(pullName: pullName, pullLocation: pullLocation, pullDate: pullDate)
-            
-            // Clear the form fields after saving
-            pullName = ""
-            pullLocation = ""
-            pullDate = Date()
+        let newPull = Pulls(pullName: pullName, pullLocation: pullLocation, pullDate: pullDate)
+                modelContext.insert(newPull)
+                do {
+                    try modelContext.save()
+                    selectedTab = 0
+                } catch {
+                    print("Failed to save the pull: \(error)")
+                }
+        
+                //clear form
+                pullName = ""
+                pullLocation = ""
+                pullDate = Date()
+
         }
 }
 
-#Preview {
-    InsertPullView()
-}

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		823F4AFE2D1912CD002CAEC7 /* PullingDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823F4AFD2D1912CD002CAEC7 /* PullingDetailsView.swift */; };
 		823F4B002D19F076002CAEC7 /* NewHookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823F4AFF2D19F076002CAEC7 /* NewHookView.swift */; };
-		823F4B022D1A0E2E002CAEC7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823F4B012D1A0E2E002CAEC7 /* HomeViewModel.swift */; };
 		823F4B042D1A0FDF002CAEC7 /* Pulls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823F4B032D1A0FDF002CAEC7 /* Pulls.swift */; };
 		823F4B072D1A1AE5002CAEC7 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823F4B062D1A1AE5002CAEC7 /* DateFormatter.swift */; };
 		826DC22A2D18DCD900125192 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826DC2292D18DCD900125192 /* HomeView.swift */; };
@@ -22,7 +21,6 @@
 /* Begin PBXFileReference section */
 		823F4AFD2D1912CD002CAEC7 /* PullingDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullingDetailsView.swift; sourceTree = "<group>"; };
 		823F4AFF2D19F076002CAEC7 /* NewHookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHookView.swift; sourceTree = "<group>"; };
-		823F4B012D1A0E2E002CAEC7 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		823F4B032D1A0FDF002CAEC7 /* Pulls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulls.swift; sourceTree = "<group>"; };
 		823F4B062D1A1AE5002CAEC7 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		826DC2292D18DCD900125192 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -48,7 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				826DC2292D18DCD900125192 /* HomeView.swift */,
-				823F4B012D1A0E2E002CAEC7 /* HomeViewModel.swift */,
 				823F4B032D1A0FDF002CAEC7 /* Pulls.swift */,
 			);
 			path = Home;
@@ -173,7 +170,6 @@
 			files = (
 				823F4B072D1A1AE5002CAEC7 /* DateFormatter.swift in Sources */,
 				82CDEE4C2D18B52300B060CB /* InsertPullView.swift in Sources */,
-				823F4B022D1A0E2E002CAEC7 /* HomeViewModel.swift in Sources */,
 				823F4AFE2D1912CD002CAEC7 /* PullingDetailsView.swift in Sources */,
 				823F4B002D19F076002CAEC7 /* NewHookView.swift in Sources */,
 				823F4B042D1A0FDF002CAEC7 /* Pulls.swift in Sources */,

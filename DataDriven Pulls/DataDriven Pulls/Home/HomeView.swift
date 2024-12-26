@@ -6,38 +6,42 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     
-    @State var viewModel = PullsViewModel()
-
+    @Query
+    var pulls: [Pulls]
+    
+    @State private var selectedTab = 0
+    
     var body: some View {
         TabView{
             NavigationView{
                 ScrollView{
                     LazyVStack{
-                        ForEach(MockData.pulls) { pull in
+                        ForEach(pulls) { pull in
                             PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate).onTapGesture {
-                                viewModel.selectedPull = pull
                             }
                         }
                     }
                     .navigationTitle("Recent Pulls")
-                }.sheet(isPresented: $viewModel.isShowingDetailView) {
-                    PullingDetailsView(viewModel: viewModel.selectedPull ?? MockData.pulls[1])
                 }
+                
             }.tabItem {
                 Image(systemName: "house")
                 Text("Home")
-                
             }
-            InsertPullView().tabItem {
+            .tag(0)
+            InsertPullView(selectedTab: $selectedTab).tabItem {
                 Image(systemName: "plus.app")
                 Text("Add Pull")
             }
+            .tag(1)
         }.accentColor(Color("PullingColor"))
     }
 }
+
 
 #Preview {
     HomeView()
