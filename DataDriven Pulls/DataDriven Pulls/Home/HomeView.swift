@@ -32,8 +32,11 @@ struct HomeView: View {
                     }
                     
                 }
+                .listStyle(PlainListStyle())
                 
-            }.tabItem {
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .tabItem {
                 Image(systemName: "house")
                 Text("Home")
             }

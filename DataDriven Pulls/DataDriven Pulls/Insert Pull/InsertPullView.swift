@@ -43,6 +43,7 @@ struct InsertPullView: View {
                 
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     func savePull() {
         let newPull = Pulls(pullName: pullName, pullLocation: pullLocation, pullDate: pullDate)
