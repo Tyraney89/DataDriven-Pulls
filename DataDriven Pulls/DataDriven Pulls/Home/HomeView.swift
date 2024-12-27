@@ -20,7 +20,9 @@ struct HomeView: View {
             NavigationView{
                 List{
                     ForEach(pulls) { pull in
+                        NavigationLink(destination: PullingDetailsView(viewModel: pull)) {
                         PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
+                    }
                             .swipeActions {
                                 Button(role: .destructive) {
                                     deletePull(pull)
