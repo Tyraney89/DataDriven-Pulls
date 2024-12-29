@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PullingDetailsView: View {
-    var viewModel: Pulls
+    var viewModel: Pull
     
     var body: some View {
         NavigationView{

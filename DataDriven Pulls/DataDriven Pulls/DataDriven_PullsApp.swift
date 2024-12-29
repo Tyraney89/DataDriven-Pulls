@@ -13,7 +13,7 @@ struct DataDriven_PullsApp: App {
         WindowGroup {
             HomeView()
         }
-        .modelContainer(for: Pulls.self,
+        .modelContainer(for: Pull.self,
                         isAutosaveEnabled: true)
     }
 }

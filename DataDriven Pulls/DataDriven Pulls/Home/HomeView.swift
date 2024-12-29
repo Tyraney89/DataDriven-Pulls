@@ -10,8 +10,8 @@ import SwiftData
 
 struct HomeView: View {
     @Environment (\.modelContext) var modelContext
-    @Query (sort: \Pulls.pullDate)
-    var pulls: [Pulls]
+    @Query (sort: \Pull.pullDate)
+    var pulls: [Pull]
     
     @State private var selectedTab = 0
     
@@ -51,7 +51,7 @@ struct HomeView: View {
         }.accentColor(Color("PullingColor"))
     }
     
-    func deletePull(_ pull: Pulls) {
+    func deletePull(_ pull: Pull) {
         modelContext.delete(pull)
         do {
             try modelContext.save()

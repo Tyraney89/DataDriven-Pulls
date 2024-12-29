@@ -46,7 +46,7 @@ struct InsertPullView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
     func savePull() {
-        let newPull = Pulls(pullName: pullName, pullLocation: pullLocation, pullDate: pullDate)
+        let newPull = Pull(pullName: pullName, pullLocation: pullLocation, pullDate: pullDate, hooks: [])
                 modelContext.insert(newPull)
                 do {
                     try modelContext.save()
