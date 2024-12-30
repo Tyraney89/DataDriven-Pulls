@@ -10,6 +10,8 @@ import SwiftData
 
 @Model
 class Hook{
+    
+    var pull: Pull?
     var pullerName: String
     var pullClass: String
     var place: Int
@@ -22,7 +24,8 @@ class Hook{
     var backWeight: Float
     
     
-    init(pullerName: String, pullClass: String, place: Int, distance: String, sled: String, gear: Int, tirePressure: Float, frontWeight: Float, bellyWeight: Float, backWeight: Float) {
+    init(pull: Pull? = nil, pullerName: String, pullClass: String, place: Int, distance: String, sled: String, gear: Int, tirePressure: Float, frontWeight: Float, bellyWeight: Float, backWeight: Float) {
+        self.pull = pull
         self.pullerName = pullerName
         self.pullClass = pullClass
         self.place = place

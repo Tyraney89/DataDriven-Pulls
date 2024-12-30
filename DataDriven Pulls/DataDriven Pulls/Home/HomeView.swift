@@ -23,6 +23,7 @@ struct HomeView: View {
                         NavigationLink(destination: PullingDetailsView(viewModel: pull)) {
                         PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
                     }
+                        .navigationTitle("Recent Pulls")
                             .swipeActions {
                                 Button(role: .destructive) {
                                     deletePull(pull)
@@ -30,7 +31,6 @@ struct HomeView: View {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
-                            .navigationTitle("Recent Pulls")
                     }
                     
                 }

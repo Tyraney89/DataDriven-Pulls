@@ -6,9 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PullingDetailsView: View {
+    
+    @Query var hooks: [Hook] // Use @Query to filter hooks
     var viewModel: Pull
+    
+    init(viewModel: Pull) {
+        self.viewModel = viewModel
+        _hooks = Query(filter: #Predicate { hook in
+            hook.pull?.id == viewModel.id // Compare the `pull.id` with `viewModel.id`
+        })
+    }
     
     var body: some View {
         NavigationView{
@@ -21,15 +31,33 @@ struct PullingDetailsView: View {
                     Spacer()
                 }.padding()
                 NavigationView{
-                    ScrollView{
-                        LazyVStack{
-                            Hooks(Puller: "Rick", Class: "9500 Pro Farm", Distance: "300 ft", Place: "1st")
-                            Hooks(Puller: "Jerrica", Class: "9500 Pro Farm", Distance: "300 ft", Place: "1st")
+                    List{
+                        ForEach(viewModel.hooks) { hook in
+                            Hooks(
+                                Puller: hook.pullerName,
+                                Class: hook.pullClass,
+                                Distance: hook.distance,
+                                Place: "\(hook.place)"
+                            )
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    deleteHook(hook)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
-                        .navigationTitle("Hooks")
                     }
                 }
             }.navigationTitle(viewModel.pullName)
+        }
+    }
+    func deleteHook(_ hook: Hook) {
+        modelContext.delete(hook)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Error saving context after deletion: \(error.localizedDescription)")
         }
     }
 }
