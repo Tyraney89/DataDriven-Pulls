@@ -11,6 +11,7 @@ import SwiftData
 struct PullingDetailsView: View {
     
     @Environment(\.modelContext) private var modelContext
+    @State private var showNewHookView = false
     var pull: Pull
     
     var body: some View {
@@ -24,7 +25,6 @@ struct PullingDetailsView: View {
                     Spacer()
                 }
                 .padding()
-                NavigationView{
                     List{
                         ForEach(pull.hooks) { hook in
                             Hooks(
@@ -42,7 +42,21 @@ struct PullingDetailsView: View {
                             }
                         }
                     }
-                }
+                    .listStyle(PlainListStyle())
+                    Button(action: {
+                                    showNewHookView.toggle()  // Show NewHookView sheet
+                                }) {
+                                    Text("Add New Hook")
+                                        .foregroundColor(.white)
+                                        .frame(maxWidth: .infinity)
+                                        .padding()
+                                        .background(Color("PullingColor"))
+                                        .cornerRadius(10)
+                                }
+                                .padding()
+                                .sheet(isPresented: $showNewHookView) {
+                                    NewHookView(pull: pull)  // Pass the pull to NewHookView
+                                }
             }.navigationTitle(pull.pullName)
         }
     }

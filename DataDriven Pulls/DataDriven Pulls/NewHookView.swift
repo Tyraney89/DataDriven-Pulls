@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NewHookView: View {
+    @Environment(\.modelContext) private var modelContext
+    
         //Hook Details
         @State private var puller: String = ""
         @State private var tractor: String = ""
@@ -21,6 +23,8 @@ struct NewHookView: View {
         @State private var frontWeight: String = ""
         @State private var bellyWeight: String = ""
         @State private var backWeight: String = ""
+    
+    var pull: Pull
     
     var body: some View {
         NavigationView{
@@ -55,10 +59,37 @@ struct NewHookView: View {
         }.navigationViewStyle(StackNavigationViewStyle())
     }
     func saveHook() {
+        // Convert input values into appropriate types
+                guard let tirePressureFloat = Float(tirePressure),
+                      let gearInt = Int(gear),
+                      let frontWeightFloat = Float(frontWeight),
+                      let bellyWeightFloat = Float(bellyWeight),
+                      let backWeightFloat = Float(backWeight) else {
+                    return  // Handle validation if necessary
+                }
 
+                // Create a new hook
+                let newHook = Hook(
+                    pull: pull,
+                    pullerName: puller,
+                    pullClass: tclass,
+                    place: 1,  // Default value, you can change it to be dynamic
+                    distance: distance,
+                    sled: sled,
+                    gear: gearInt,
+                    tirePressure: tirePressureFloat,
+                    frontWeight: frontWeightFloat,
+                    bellyWeight: bellyWeightFloat,
+                    backWeight: backWeightFloat
+                )
+
+                // Add the new hook to the model context and save
+                modelContext.insert(newHook)
+                do {
+                    try modelContext.save()
+                    pull.hooks.append(newHook)  // Update the pull's hooks with the new hook
+                } catch {
+                    print("Failed to save the hook: \(error)")
+                }
         }
-}
-
-#Preview {
-    NewHookView()
 }
