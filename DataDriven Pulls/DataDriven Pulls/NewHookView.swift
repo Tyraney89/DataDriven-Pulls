@@ -42,10 +42,21 @@ struct NewHookView: View {
                         TextField("Back Weight (e.g., 300 lbs)", text: $backWeight)
                     }
                 }.navigationTitle("Record a New Hook")
-                
+                    .accentColor(Color("PullingColor"))
+                Button(action: saveHook) {
+                    Text("Save Hook")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color("PullingColor"))
+                        .cornerRadius(10)
+                }
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
+    func saveHook() {
+
+        }
 }
 
 #Preview {
