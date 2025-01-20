@@ -18,8 +18,6 @@ struct InsertPullView: View {
     @State private var pullDate = Date()
     @State private var pullLocation: String = ""
     
-    @Binding var selectedTab: Int
-    
     var body: some View {
         NavigationView{
             VStack{
@@ -50,7 +48,6 @@ struct InsertPullView: View {
                 modelContext.insert(newPull)
                 do {
                     try modelContext.save()
-                    selectedTab = 0
                 } catch {
                     print("Failed to save the pull: \(error)")
                 }

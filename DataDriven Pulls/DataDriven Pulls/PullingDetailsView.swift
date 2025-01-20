@@ -10,29 +10,23 @@ import SwiftData
 
 struct PullingDetailsView: View {
     
-    @Query var hooks: [Hook] // Use @Query to filter hooks
-    var viewModel: Pull
-    
-    init(viewModel: Pull) {
-        self.viewModel = viewModel
-        _hooks = Query(filter: #Predicate { hook in
-            hook.pull?.id == viewModel.id // Compare the `pull.id` with `viewModel.id`
-        })
-    }
+    @Environment(\.modelContext) private var modelContext
+    var pull: Pull
     
     var body: some View {
         NavigationView{
             VStack{
                 HStack{
                     VStack(alignment: .leading){
-                        Text(GlobalDateFormatter.shared.string(from: viewModel.pullDate))
-                        Text(viewModel.pullLocation)
+                        Text("Date: \(GlobalDateFormatter.shared.string(from: pull.pullDate))")
+                        Text("Location: \(pull.pullLocation)")
                     }
                     Spacer()
-                }.padding()
+                }
+                .padding()
                 NavigationView{
                     List{
-                        ForEach(viewModel.hooks) { hook in
+                        ForEach(pull.hooks) { hook in
                             Hooks(
                                 Puller: hook.pullerName,
                                 Class: hook.pullClass,
@@ -49,7 +43,7 @@ struct PullingDetailsView: View {
                         }
                     }
                 }
-            }.navigationTitle(viewModel.pullName)
+            }.navigationTitle(pull.pullName)
         }
     }
     func deleteHook(_ hook: Hook) {

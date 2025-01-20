@@ -9,29 +9,21 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
-    @Environment (\.modelContext) var modelContext
-    @Query (sort: \Pull.pullDate)
-    var pulls: [Pull]
+    @Environment(\.modelContext) private var modelContext
+    @Query var pulls: [Pull]
     
-    @State private var selectedTab = 0
     
     var body: some View {
         TabView{
             NavigationView{
                 List{
                     ForEach(pulls) { pull in
-                        NavigationLink(destination: PullingDetailsView(viewModel: pull)) {
-                        PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
-                    }
+                        NavigationLink(destination: PullingDetailsView(pull: pull)) {
+                            PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
+                        }
                         .navigationTitle("Recent Pulls")
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    deletePull(pull)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
                     }
+                    .onDelete(perform: deletePull)
                     
                 }
                 .listStyle(PlainListStyle())
@@ -42,21 +34,22 @@ struct HomeView: View {
                 Image(systemName: "house")
                 Text("Home")
             }
-            .tag(0)
-            InsertPullView(selectedTab: $selectedTab).tabItem {
+            InsertPullView().tabItem {
                 Image(systemName: "plus.app")
                 Text("Add Pull")
             }
-            .tag(1)
         }.accentColor(Color("PullingColor"))
     }
-    
-    func deletePull(_ pull: Pull) {
-        modelContext.delete(pull)
+    private func deletePull(at offsets: IndexSet) {
+        for index in offsets {
+            let pull = pulls[index]
+            modelContext.delete(pull)
+        }
+        
         do {
             try modelContext.save()
         } catch {
-            print("Error saving context after deletion: \(error.localizedDescription)")
+            print("Failed to delete the pull: \(error.localizedDescription)")
         }
     }
 }
