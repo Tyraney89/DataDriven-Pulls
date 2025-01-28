@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NewHookView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
     
         //Hook Details
         @State private var puller: String = ""
@@ -16,6 +17,7 @@ struct NewHookView: View {
         @State private var distance: String = ""
         @State private var sled: String = ""
         @State private var tclass: String = ""
+        @State private var place: String = ""
         
         //Tractor Details
         @State private var tirePressure: String = ""
@@ -36,6 +38,7 @@ struct NewHookView: View {
                         TextField("Class Name (e.g., 9500 Pro Farm)", text: $tclass)
                         TextField("Distance (e.g., 300 ft)", text: $distance).keyboardType(.decimalPad)
                         TextField("Sled (e.g., Red Rock)", text: $sled)
+                        TextField("Place (e.g, 1st)", text: $place)
                     }
                     
                     Section(header: Text("Tractor Details")){
@@ -46,6 +49,16 @@ struct NewHookView: View {
                         TextField("Back Weight (e.g., 300 lbs)", text: $backWeight)
                     }
                 }.navigationTitle("Record a New Hook")
+                    .toolbar {
+                                        ToolbarItem(placement: .navigationBarTrailing) {
+                                            Button(action: {
+                                                dismiss()  // Dismiss the view when "X" is tapped
+                                            }) {
+                                                Image(systemName: "xmark")
+                                                    .foregroundColor(.primary)
+                                            }
+                                        }
+                                    }
                     .accentColor(Color("PullingColor"))
                 Button(action: saveHook) {
                     Text("Save Hook")
@@ -73,14 +86,15 @@ struct NewHookView: View {
                     pull: pull,
                     pullerName: puller,
                     pullClass: tclass,
-                    place: 1,  // Default value, you can change it to be dynamic
+                    place: place,
                     distance: distance,
                     sled: sled,
                     gear: gearInt,
                     tirePressure: tirePressureFloat,
                     frontWeight: frontWeightFloat,
                     bellyWeight: bellyWeightFloat,
-                    backWeight: backWeightFloat
+                    backWeight: backWeightFloat,
+                    tractor: tractor
                 )
 
                 // Add the new hook to the model context and save
@@ -88,6 +102,7 @@ struct NewHookView: View {
                 do {
                     try modelContext.save()
                     pull.hooks.append(newHook)  // Update the pull's hooks with the new hook
+                    dismiss()
                 } catch {
                     print("Failed to save the hook: \(error)")
                 }

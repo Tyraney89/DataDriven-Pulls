@@ -14,7 +14,8 @@ class Hook{
     var pull: Pull?
     var pullerName: String
     var pullClass: String
-    var place: Int
+    var tractor: String
+    var place: String
     var distance: String
     var sled: String
     var gear: Int
@@ -24,7 +25,7 @@ class Hook{
     var backWeight: Float
     
     
-    init(pull: Pull? = nil, pullerName: String, pullClass: String, place: Int, distance: String, sled: String, gear: Int, tirePressure: Float, frontWeight: Float, bellyWeight: Float, backWeight: Float) {
+    init(pull: Pull? = nil, pullerName: String, pullClass: String, place: String, distance: String, sled: String, gear: Int, tirePressure: Float, frontWeight: Float, bellyWeight: Float, backWeight: Float, tractor: String) {
         self.pull = pull
         self.pullerName = pullerName
         self.pullClass = pullClass
@@ -36,6 +37,7 @@ class Hook{
         self.frontWeight = frontWeight
         self.bellyWeight = bellyWeight
         self.backWeight = backWeight
+        self.tractor = tractor
     }
 }
 

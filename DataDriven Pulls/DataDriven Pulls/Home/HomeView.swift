@@ -10,7 +10,7 @@ import SwiftData
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query var pulls: [Pull]
+    @Query(sort: \Pull.pullDate, order: .reverse) var pulls: [Pull]
     
     
     var body: some View {

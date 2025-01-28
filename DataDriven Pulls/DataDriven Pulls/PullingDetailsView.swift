@@ -12,6 +12,7 @@ struct PullingDetailsView: View {
     
     @Environment(\.modelContext) private var modelContext
     @State private var showNewHookView = false
+    @State private var selectedHook: Hook?
     var pull: Pull
     
     var body: some View {
@@ -27,12 +28,15 @@ struct PullingDetailsView: View {
                 .padding()
                     List{
                         ForEach(pull.hooks) { hook in
-                            Hooks(
-                                Puller: hook.pullerName,
-                                Class: hook.pullClass,
-                                Distance: hook.distance,
-                                Place: "\(hook.place)"
-                            )
+                                Hooks(
+                                    Puller: hook.pullerName,
+                                    Class: hook.pullClass,
+                                    Distance: hook.distance,
+                                    Place: hook.place
+                                )
+                                .onTapGesture {
+                                    selectedHook = hook
+                                }
                             .swipeActions {
                                 Button(role: .destructive) {
                                     deleteHook(hook)
@@ -58,6 +62,9 @@ struct PullingDetailsView: View {
                                     NewHookView(pull: pull)  // Pass the pull to NewHookView
                                 }
             }.navigationTitle(pull.pullName)
+                .sheet(item: $selectedHook) { hook in
+                                EditHookView(hook: hook)  // Show the edit view for the selected hook
+                            }
         }
     }
     func deleteHook(_ hook: Hook) {
