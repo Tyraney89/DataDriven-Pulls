@@ -11,6 +11,7 @@ import SwiftData
 struct InsertPullView: View {
     
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
     
     
     //Pull details
@@ -37,6 +38,17 @@ struct InsertPullView: View {
                     }
                 }
                 .navigationTitle("Record a New Pull")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            dismiss()  // Dismiss the view when "X" is tapped
+                        }) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.primary)
+                                .padding()
+                        }
+                    }
+                }
                 .accentColor(Color("PullingColor"))
                 
             }
@@ -48,15 +60,10 @@ struct InsertPullView: View {
                 modelContext.insert(newPull)
                 do {
                     try modelContext.save()
+                    dismiss()
                 } catch {
                     print("Failed to save the pull: \(error)")
                 }
-        
-                //clear form
-                pullName = ""
-                pullLocation = ""
-                pullDate = Date()
-
         }
 }
 

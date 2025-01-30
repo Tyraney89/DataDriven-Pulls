@@ -12,34 +12,54 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Pull.pullDate, order: .reverse) var pulls: [Pull]
     
+    @State private var showInsertPullView = false  // State to control sheet presentation
     
     var body: some View {
-        TabView{
-            NavigationView{
-                List{
-                    ForEach(pulls) { pull in
-                        NavigationLink(destination: PullingDetailsView(pull: pull)) {
-                            PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
-                        }
-                        .navigationTitle("Recent Pulls")
+        NavigationView {
+            VStack {
+                if pulls.isEmpty {
+                    VStack {
+                        Text("No pulls recorded yet.")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        
+                        Text("Tap the '+' button to add a pull.")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
-                    .onDelete(perform: deletePull)
-                    
+                    .padding()
+                } else {
+                    List {
+                        ForEach(pulls) { pull in
+                            NavigationLink(destination: PullingDetailsView(pull: pull)) {
+                                PullRow(Name: pull.pullName, Location: pull.pullLocation, Date: pull.pullDate)
+                            }
+                        }
+                        .onDelete(perform: deletePull)
+                    }
+                    .listStyle(PlainListStyle())
                 }
-                .listStyle(PlainListStyle())
-                
             }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .tabItem {
-                Image(systemName: "house")
-                Text("Home")
+            .navigationTitle("Recent Pulls")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showInsertPullView.toggle()  // Show the sheet
+                    }) {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                            .padding()
+                    }
+                }
             }
-            InsertPullView().tabItem {
-                Image(systemName: "plus.app")
-                Text("Add Pull")
+            .sheet(isPresented: $showInsertPullView) {
+                InsertPullView()
             }
-        }.accentColor(Color("PullingColor"))
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .accentColor(Color("PullingColor"))
     }
+
     private func deletePull(at offsets: IndexSet) {
         for index in offsets {
             let pull = pulls[index]
@@ -52,11 +72,6 @@ struct HomeView: View {
             print("Failed to delete the pull: \(error.localizedDescription)")
         }
     }
-}
-
-
-#Preview {
-    HomeView()
 }
 
 

@@ -41,12 +41,27 @@ struct NewHookView: View {
                         TextField("Place (e.g, 1st)", text: $place)
                     }
                     
-                    Section(header: Text("Tractor Details")){
+                    Section(header: Text("Tractor Details")) {
                         TextField("Tire Pressure (e.g., 25.5 psi)", text: $tirePressure)
+                            .keyboardType(.decimalPad)
+                            
+                        
                         TextField("Gear (e.g., 3rd)", text: $gear)
+                            .keyboardType(.numberPad)
+                            
+                        
                         TextField("Front Weight (e.g., 300 lbs)", text: $frontWeight)
-                        TextField("Belly Weight (e.g., 300 lbs", text: $bellyWeight)
+                            .keyboardType(.decimalPad)
+                            
+                        
+                        TextField("Belly Weight (e.g., 300 lbs)", text: $bellyWeight)
+                            .keyboardType(.decimalPad)
+                            
+                        
                         TextField("Back Weight (e.g., 300 lbs)", text: $backWeight)
+                            .keyboardType(.decimalPad)
+        
+                            
                     }
                 }.navigationTitle("Record a New Hook")
                     .toolbar {
@@ -56,6 +71,7 @@ struct NewHookView: View {
                                             }) {
                                                 Image(systemName: "xmark")
                                                     .foregroundColor(.primary)
+                                                    .padding()
                                             }
                                         }
                                     }

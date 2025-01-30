@@ -33,10 +33,11 @@ class Hook{
         self.distance = distance
         self.sled = sled
         self.gear = gear
-        self.tirePressure = tirePressure
-        self.frontWeight = frontWeight
-        self.bellyWeight = bellyWeight
-        self.backWeight = backWeight
+        self.tirePressure = tirePressure.isNaN ? 0.0 : tirePressure
+        self.frontWeight = frontWeight.isNaN ? 0.0 : frontWeight
+        self.bellyWeight = bellyWeight.isNaN ? 0.0 : bellyWeight
+        self.backWeight = backWeight.isNaN ? 0.0 : backWeight
+        
         self.tractor = tractor
     }
 }
@@ -49,13 +50,13 @@ class Pull {
     var pullDate: Date
     var hooks: [Hook]
     
-    init(pullName: String, pullLocation: String, pullDate: Date, hooks: [Hook]) {
-            self.id = UUID()
-            self.pullName = pullName
-            self.pullLocation = pullLocation
-            self.pullDate = pullDate
-            self.hooks = hooks
-        }
+    init(pullName: String, pullLocation: String, pullDate: Date, hooks: [Hook] = []) {
+        self.id = UUID()
+        self.pullName = pullName
+        self.pullLocation = pullLocation
+        self.pullDate = pullDate
+        self.hooks = hooks.isEmpty ? [] : hooks
+    }
 }
 
 
