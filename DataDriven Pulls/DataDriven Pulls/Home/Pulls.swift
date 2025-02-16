@@ -1,16 +1,10 @@
-//
-//  Pulls.swift
-//  DataDriven Pulls
-//
-//  Created by Tyler Burke on 12/23/24.
-//
-
 import Foundation
 import SwiftData
 
 @Model
-class Hook{
+class Hook {
     
+    // Required fields
     var pull: Pull?
     var pullerName: String
     var pullClass: String
@@ -18,27 +12,31 @@ class Hook{
     var place: String
     var distance: String
     var sled: String
-    var gear: Int
     var tirePressure: Float
-    var frontWeight: Float
-    var bellyWeight: Float
-    var backWeight: Float
+
+    // Custom categories for flexibility
+    var customCategories: [String: String]
     
-    
-    init(pull: Pull? = nil, pullerName: String, pullClass: String, place: String, distance: String, sled: String, gear: Int, tirePressure: Float, frontWeight: Float, bellyWeight: Float, backWeight: Float, tractor: String) {
+    init(
+        pull: Pull? = nil,
+        pullerName: String,
+        pullClass: String,
+        tractor: String,
+        place: String,
+        distance: String,
+        sled: String,
+        tirePressure: Float,
+        customCategories: [String: String] = [:]
+    ) {
         self.pull = pull
         self.pullerName = pullerName
         self.pullClass = pullClass
+        self.tractor = tractor
         self.place = place
         self.distance = distance
         self.sled = sled
-        self.gear = gear
-        self.tirePressure = tirePressure.isNaN ? 0.0 : tirePressure
-        self.frontWeight = frontWeight.isNaN ? 0.0 : frontWeight
-        self.bellyWeight = bellyWeight.isNaN ? 0.0 : bellyWeight
-        self.backWeight = backWeight.isNaN ? 0.0 : backWeight
-        
-        self.tractor = tractor
+        self.tirePressure = tirePressure
+        self.customCategories = customCategories
     }
 }
 
@@ -55,9 +53,6 @@ class Pull {
         self.pullName = pullName
         self.pullLocation = pullLocation
         self.pullDate = pullDate
-        self.hooks = hooks.isEmpty ? [] : hooks
+        self.hooks = hooks
     }
 }
-
-
-

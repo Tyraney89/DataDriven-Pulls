@@ -1,81 +1,78 @@
-//
-//  NewHookView.swift
-//  DataDriven Pulls
-//
-//  Created by Tyler Burke on 12/23/24.
-//
-
 import SwiftUI
 
 struct NewHookView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    
-        //Hook Details
-        @State private var puller: String = ""
-        @State private var tractor: String = ""
-        @State private var distance: String = ""
-        @State private var sled: String = ""
-        @State private var tclass: String = ""
-        @State private var place: String = ""
-        
-        //Tractor Details
-        @State private var tirePressure: String = ""
-        @State private var gear: String = ""
-        @State private var frontWeight: String = ""
-        @State private var bellyWeight: String = ""
-        @State private var backWeight: String = ""
-    
+
+    // Core Hook Details (Required)
+    @State private var puller: String = ""
+    @State private var tractor: String = ""
+    @State private var distance: String = ""
+    @State private var sled: String = ""
+    @State private var tclass: String = ""
+    @State private var place: String = ""
+    @State private var tirePressure: String = ""
+
+    // Custom categories
+    @State private var customCategories: [String: String] = [:]
+    @State private var newCategoryName: String = ""
+    @State private var newCategoryValue: String = ""
+
     var pull: Pull
-    
+
     var body: some View {
-        NavigationView{
-            VStack{
-                Form{
-                    Section(header: Text("Hook Details")){
+        NavigationView {
+            VStack {
+                Form {
+                    Section(header: Text("Hook Details")) {
                         TextField("Puller Name (e.g., Rick)", text: $puller)
                         TextField("Tractor Name (e.g., WhyNot)", text: $tractor)
                         TextField("Class Name (e.g., 9500 Pro Farm)", text: $tclass)
-                        TextField("Distance (e.g., 300 ft)", text: $distance).keyboardType(.decimalPad)
+                        TextField("Distance (e.g., 300 ft)", text: $distance)
+                            .keyboardType(.decimalPad)
                         TextField("Sled (e.g., Red Rock)", text: $sled)
                         TextField("Place (e.g, 1st)", text: $place)
-                    }
-                    
-                    Section(header: Text("Tractor Details")) {
+                            .keyboardType(.decimalPad)
                         TextField("Tire Pressure (e.g., 25.5 psi)", text: $tirePressure)
                             .keyboardType(.decimalPad)
-                            
-                        
-                        TextField("Gear (e.g., 3rd)", text: $gear)
-                            .keyboardType(.numberPad)
-                            
-                        
-                        TextField("Front Weight (e.g., 300 lbs)", text: $frontWeight)
-                            .keyboardType(.decimalPad)
-                            
-                        
-                        TextField("Belly Weight (e.g., 300 lbs)", text: $bellyWeight)
-                            .keyboardType(.decimalPad)
-                            
-                        
-                        TextField("Back Weight (e.g., 300 lbs)", text: $backWeight)
-                            .keyboardType(.decimalPad)
-        
-                            
                     }
-                }.navigationTitle("Record a New Hook")
-                    .toolbar {
-                                        ToolbarItem(placement: .navigationBarTrailing) {
-                                            Button(action: {
-                                                dismiss()  // Dismiss the view when "X" is tapped
-                                            }) {
-                                                Image(systemName: "xmark")
-                                                    .foregroundColor(.primary)
-                                                    .padding()
-                                            }
-                                        }
-                                    }
-                    .accentColor(Color("PullingColor"))
+
+                    // Section for custom categories
+                    Section(header: Text("Custom Categories")) {
+                        ForEach(Array(customCategories.keys), id: \.self) { key in
+                            HStack {
+                                Text(key)
+                                Spacer()
+                                TextField("Value", text: Binding(
+                                    get: { customCategories[key] ?? "" },
+                                    set: { customCategories[key] = $0 }
+                                ))
+                                .multilineTextAlignment(.trailing)
+                            }
+                        }
+
+                        HStack {
+                            TextField("Category Name", text: $newCategoryName)
+                            TextField("Value", text: $newCategoryValue)
+                            Button(action: addCustomCategory) {
+                                Image(systemName: "plus.circle")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    }
+                }
+                .navigationTitle("Record a New Hook")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: { dismiss() }) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.primary)
+                                .padding()
+                        }
+                    }
+                }
+                .accentColor(Color("PullingColor"))
+
                 Button(action: saveHook) {
                     Text("Save Hook")
                         .foregroundColor(.white)
@@ -84,43 +81,45 @@ struct NewHookView: View {
                         .background(Color("PullingColor"))
                         .cornerRadius(10)
                 }
+                .padding()
             }
-        }.navigationViewStyle(StackNavigationViewStyle())
-    }
-    func saveHook() {
-        // Convert input values into appropriate types
-                guard let tirePressureFloat = Float(tirePressure),
-                      let gearInt = Int(gear),
-                      let frontWeightFloat = Float(frontWeight),
-                      let bellyWeightFloat = Float(bellyWeight),
-                      let backWeightFloat = Float(backWeight) else {
-                    return  // Handle validation if necessary
-                }
-
-                // Create a new hook
-                let newHook = Hook(
-                    pull: pull,
-                    pullerName: puller,
-                    pullClass: tclass,
-                    place: place,
-                    distance: distance,
-                    sled: sled,
-                    gear: gearInt,
-                    tirePressure: tirePressureFloat,
-                    frontWeight: frontWeightFloat,
-                    bellyWeight: bellyWeightFloat,
-                    backWeight: backWeightFloat,
-                    tractor: tractor
-                )
-
-                // Add the new hook to the model context and save
-                modelContext.insert(newHook)
-                do {
-                    try modelContext.save()
-                    pull.hooks.append(newHook)  // Update the pull's hooks with the new hook
-                    dismiss()
-                } catch {
-                    print("Failed to save the hook: \(error)")
-                }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    // Function to add a custom category
+    private func addCustomCategory() {
+        guard !newCategoryName.isEmpty else { return }
+        customCategories[newCategoryName] = newCategoryValue
+        newCategoryName = ""
+        newCategoryValue = ""
+    }
+
+    private func saveHook() {
+        // Convert tire pressure to a float
+        guard let tirePressureFloat = Float(tirePressure) else { return }
+
+        // Create a new hook with required fields
+        let newHook = Hook(
+            pull: pull,
+            pullerName: puller,
+            pullClass: tclass,
+            tractor: tractor,
+            place: place,
+            distance: distance,
+            sled: sled,
+            tirePressure: tirePressureFloat,
+            customCategories: customCategories
+        )
+
+        // Save the new hook
+        modelContext.insert(newHook)
+        do {
+            try modelContext.save()
+            pull.hooks.append(newHook)  // Update the pull's hooks with the new hook
+            dismiss()
+        } catch {
+            print("Failed to save the hook: \(error)")
+        }
+    }
 }

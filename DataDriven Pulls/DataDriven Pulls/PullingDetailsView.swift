@@ -94,8 +94,8 @@ struct Hooks: View {
                 }
                 Spacer()
                 VStack{
-                    Text(Distance).font(.subheadline).foregroundColor(Color("PullingColor"))
-                    Text(Place).font(.subheadline).foregroundColor(Color("PullingColor"))
+                    Text("\(Distance) ft").font(.subheadline).foregroundColor(Color("PullingColor"))
+                    Text(getFormattedPlace(Place)).font(.subheadline).foregroundColor(Color("PullingColor"))
                 }
             }
             .padding() // Padding inside the bubble
@@ -107,5 +107,23 @@ struct Hooks: View {
         .padding(.vertical, 8)
         .listRowInsets(EdgeInsets())
     }
+    func getFormattedPlace(_ place: String) -> String {
+            guard let placeNumber = Int(place) else { return place } // Ensure it's a number
+            
+            let suffix: String
+            
+            switch placeNumber % 10 {
+            case 1 where placeNumber != 11:
+                suffix = "st"
+            case 2 where placeNumber != 12:
+                suffix = "nd"
+            case 3 where placeNumber != 13:
+                suffix = "rd"
+            default:
+                suffix = "th"
+            }
+            
+            return "\(place)\(suffix)"
+        }
 }
 

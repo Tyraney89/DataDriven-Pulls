@@ -6,103 +6,52 @@ struct EditHookView: View {
 
     @Bindable var hook: Hook  // Bind to the hook for editing
 
+    // New category inputs
+    @State private var newCategoryName: String = ""
+    @State private var newCategoryValue: String = ""
+
     var body: some View {
         NavigationView {
             VStack {
                 Form {
                     Section(header: Text("Hook Details")) {
-                        HStack {
-                            Text("Puller Name:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., Rick", text: $hook.pullerName)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Tractor Name:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., WhyNot", text: $hook.tractor)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Class Name:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 9500 Pro Farm", text: $hook.pullClass)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Distance:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 300 ft", text: $hook.distance)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Sled:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., Red Rock", text: $hook.sled)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Place:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 1st", text: $hook.place)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
+                        fieldRow(label: "Puller Name:", text: $hook.pullerName)
+                        fieldRow(label: "Tractor Name:", text: $hook.tractor)
+                        fieldRow(label: "Class Name:", text: $hook.pullClass)
+                        fieldRow(label: "Distance:", text: $hook.distance, keyboardType: .decimalPad)
+                        fieldRow(label: "Sled:", text: $hook.sled)
+                        fieldRow(label: "Place:", text: $hook.place)
+                        fieldRow(label: "Tire Pressure:", value: $hook.tirePressure)
                     }
 
-                    Section(header: Text("Tractor Details")) {
-                        HStack {
-                            Text("Tire Pressure:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 25.5 psi", value: $hook.tirePressure, format: .number)
-                                .keyboardType(.decimalPad)
+                    Section(header: Text("Custom Categories")) {
+                        ForEach(Array(hook.customCategories.keys), id: \.self) { key in
+                            HStack {
+                                Text(key)
+                                    .frame(width: 120, alignment: .leading)
+                                TextField("Value", text: Binding(
+                                    get: { hook.customCategories[key] ?? "" },
+                                    set: { hook.customCategories[key] = $0 }
+                                ))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                            }
                         }
 
+                        // Add new custom category
                         HStack {
-                            Text("Gear:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 3rd", value: $hook.gear, format: .number)
-                                .keyboardType(.numberPad)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Front Weight:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 300 lbs", value: $hook.frontWeight, format: .number)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Belly Weight:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 300 lbs", value: $hook.bellyWeight, format: .number)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-
-                        HStack {
-                            Text("Back Weight:")
-                                .frame(width: 120, alignment: .leading)
-                            TextField("e.g., 300 lbs", value: $hook.backWeight, format: .number)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                            TextField("Category Name", text: $newCategoryName)
+                            TextField("Value", text: $newCategoryValue)
+                            Button(action: addCustomCategory) {
+                                Image(systemName: "plus.circle")
+                                    .foregroundColor(.blue)
+                            }
                         }
                     }
                 }
                 .navigationTitle("Edit Hook")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            dismiss()  // Dismiss the view when "X" is tapped
-                        }) {
+                        Button(action: { dismiss() }) {
                             Image(systemName: "xmark")
                                 .foregroundColor(.primary)
                         }
@@ -124,12 +73,40 @@ struct EditHookView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
 
+    private func addCustomCategory() {
+        guard !newCategoryName.isEmpty else { return }
+        hook.customCategories[newCategoryName] = newCategoryValue
+        newCategoryName = ""
+        newCategoryValue = ""
+    }
+
     private func saveChanges() {
         do {
             try modelContext.save()  // Save changes to the hook
             dismiss()  // Dismiss the view
         } catch {
             print("Failed to save changes: \(error.localizedDescription)")
+        }
+    }
+
+    // Helper function to create text fields with labels
+    private func fieldRow(label: String, text: Binding<String>, keyboardType: UIKeyboardType = .default) -> some View {
+        HStack {
+            Text(label)
+                .frame(width: 120, alignment: .leading)
+            TextField("e.g., \(label)", text: text)
+                .keyboardType(keyboardType)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+    }
+
+    private func fieldRow(label: String, value: Binding<Float>, keyboardType: UIKeyboardType = .decimalPad) -> some View {
+        HStack {
+            Text(label)
+                .frame(width: 120, alignment: .leading)
+            TextField("e.g., \(label)", value: value, format: .number)
+                .keyboardType(keyboardType)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
         }
     }
 }
