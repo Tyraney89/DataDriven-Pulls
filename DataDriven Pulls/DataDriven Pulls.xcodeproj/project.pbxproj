@@ -44,21 +44,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		823F4B052D1A0FF5002CAEC7 /* Home */ = {
+		821D646A2D61C1EA008B1B32 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				826DC2292D18DCD900125192 /* HomeView.swift */,
 				823F4B032D1A0FDF002CAEC7 /* Pulls.swift */,
 			);
-			path = Home;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		823F4B092D1A2237002CAEC7 /* Insert Pull */ = {
+		821D646B2D61C200008B1B32 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				82CDEE4B2D18B52200B060CB /* InsertPullView.swift */,
+				823F4AFD2D1912CD002CAEC7 /* PullingDetailsView.swift */,
+				82C02EEA2D48687B00DA5973 /* EditHookView.swift */,
+				823F4AFF2D19F076002CAEC7 /* NewHookView.swift */,
+				826DC2292D18DCD900125192 /* HomeView.swift */,
 			);
-			path = "Insert Pull";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		82CDEE312D18B23500B060CB = {
@@ -80,14 +83,11 @@
 		82CDEE3C2D18B23500B060CB /* DataDriven Pulls */ = {
 			isa = PBXGroup;
 			children = (
-				823F4B092D1A2237002CAEC7 /* Insert Pull */,
-				823F4B052D1A0FF5002CAEC7 /* Home */,
 				82CDEE3D2D18B23500B060CB /* DataDriven_PullsApp.swift */,
-				823F4AFD2D1912CD002CAEC7 /* PullingDetailsView.swift */,
-				82C02EEA2D48687B00DA5973 /* EditHookView.swift */,
-				823F4AFF2D19F076002CAEC7 /* NewHookView.swift */,
-				823F4B062D1A1AE5002CAEC7 /* DateFormatter.swift */,
+				821D646B2D61C200008B1B32 /* Views */,
+				821D646A2D61C1EA008B1B32 /* Models */,
 				82CDEE412D18B23500B060CB /* Assets.xcassets */,
+				823F4B062D1A1AE5002CAEC7 /* DateFormatter.swift */,
 				82CDEE432D18B23500B060CB /* Preview Content */,
 			);
 			path = "DataDriven Pulls";
@@ -312,6 +312,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DataDriven Pulls/Preview Content\"";
+				DEVELOPMENT_TEAM = K6L8673MG4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -340,6 +341,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DataDriven Pulls/Preview Content\"";
+				DEVELOPMENT_TEAM = K6L8673MG4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
