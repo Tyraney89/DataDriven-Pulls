@@ -11,7 +11,9 @@ import SwiftUI
 struct DataDriven_PullsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
+        .modelContainer(for: [Pull.self, Hook.self],
+                        isAutosaveEnabled: true)
     }
 }
