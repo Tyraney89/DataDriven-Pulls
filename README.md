@@ -1,4 +1,7 @@
 # Data-Driven Pulls
+[The App in Action](Assets/Screen Recording 2025-02-15 at 4.50.34 PM.mov)
+
+
 ## Purpose
 I created this project because my dad is passionate about tractor pulling. He currently tracks detailed stats about each event in his iPhone's notes app, but I wanted to provide him with a more structured and efficient way to organize this data. Additionally, I saw this as an opportunity to explore mobile development. This project ultimatly didnt make it onto the app store due to the cost of the apple developer account and not having the bandwidth at this time to support monitzing the app. Maybe one day ill return to this project to finish it and maybe add some AI/ML since this project is centered around data.
 
