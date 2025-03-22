@@ -62,7 +62,7 @@ This structure was straightforward to implement, as shown below:
 ## Early Designs
 These are some early sketches from when I came up with the idea of making this app. I didn't want to make overly complecated wireframe sketches for this project. I knew I was gonna be using SwifUI so I wanted to adapt the design that would be provided by apple. I still wanted some personal touch to the app so I made some custom stuff like the individual pull component and hook component.
 
-<img src="Assets/PullViewSketch.png" width="200">  <img src="Assets/HookViewSketch.png" width="200">
+<img src="Assets/HomeViewSketch.png" width="200">  <img src="Assets/HookViewSketch.png" width="200">
 
 ### Future Improvements
 If I revisit this project, I’d consider:
