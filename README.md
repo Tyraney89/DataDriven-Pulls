@@ -10,4 +10,4 @@ There were only 4 view that I had to design for this mobile application. The hom
 
 ### The Home View
 
-<img src="Assets/HomeView.png" width="100">
+<img src="Assets/HomeView.png" width="300">
