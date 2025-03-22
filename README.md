@@ -1,5 +1,5 @@
 # Data-Driven Pulls
-[The App in Action](Assets/Screen Recording 2025-02-15 at 4.50.34 PM.mov)
+[The App in Action](Assets/Demo.mov)
 
 
 ## Purpose
