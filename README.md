@@ -9,3 +9,4 @@ The goal of this project was to build an app that helps my dad organize his trac
 There were only 4 view that I had to design for this mobile application. The home view, detialed pull view, and both the insert views for entering a pull and entering a hook.(for people not familiar with tractor pulling a hook is one run down the track, at many of these tractor pulling events you have multipls "hooks" down the track
 
 ### The Home View
+![Home View](Assets/HomeView.png)
