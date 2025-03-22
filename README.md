@@ -10,6 +10,7 @@ There were only 4 view that I had to design for this mobile application. The hom
 
 ### The Home View
 The view has 3 functions the user is able to do. The can add a new pull with the plus button in the top right. They can click on the pull itself to take them to the detailed pull screen. They can also swipe right to delete the pull.
+
 <img src="Assets/HomeView.png" width="300">
 
 
