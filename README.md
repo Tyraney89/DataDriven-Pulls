@@ -65,5 +65,3 @@ If I revisit this project, I’d consider:
 - Adding **CloudKit** support for seamless data sync across devices.
 
 ---
-
-This version improves **clarity, grammar, and formatting**, while adding **internal links** for easier navigation. Let me know if you want any further refinements! 🚀
